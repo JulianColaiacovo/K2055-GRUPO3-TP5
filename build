@@ -1,0 +1,13 @@
+rm -R target
+mkdir target
+
+cp codigo/* target/
+
+cd target
+
+flex -o scanner.c scanner.l
+bison -o parser.c parser.y
+
+gcc main.c parser.c scanner.c -o main -lfl
+
+cd ..

@@ -1,0 +1,18 @@
+#include <string.h>
+
+char *diccionario[1000];
+int indice_diccionario = 0;
+
+void registrarIdentificador(char *identificador) {
+	diccionario[indice_diccionario] = identificador;
+	indice_diccionario++;
+}
+
+int existeIdentificador(char *identificador) {
+	for (int i = 0; i < indice_diccionario; i++) {
+		if (strcmp(diccionario[i], identificador) == 0) {
+			return 1;
+		}
+	}
+	return 0;
+}
