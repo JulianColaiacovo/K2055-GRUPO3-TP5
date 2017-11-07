@@ -1,9 +1,8 @@
-#include "symbol.c"
+#include "symbol.h"
 
 extern char temp_text[10];
 extern int semantic_error_count;
-int indice_variable_temporal = 0;
-char temp_text[10];
+static int indice_variable_temporal = 0;
 
 void inicioPrograma() {
 	printf("Load rtlib,\n");
@@ -46,25 +45,64 @@ void generarVariableTemporal() {
 	declararIdentificador(temp_text);
 }
 
+void realizarOperacion(char* instruccion, char* variableUno, char* VariableDos){
+	generarVariableTemporal();
+	printf("%s %s,%s,%s\n", instruccion, variableUno, variableDos, temp_text[indice_variable_temporal]);
+}
+
 int invertir(char *identificador) {
 	if (existeIdentificador(identificador)) {
-		generarVariableTemporal();
-
-		printf("INV %s,,%s\n", identificador, temp_text);
+		realizarOperacion("INV", identificador, "");
 		return 0;
 	} else {
+		semantic_error_count++;
 		return 1;
 	}
 }
 
 int multiplicar(char *factorUno, char *factorDos) {
 	printf("generado%s,%s\n", factorUno, factorDos);
-	printf("generado\n");
-	if (existeIdentificador(factorUno) && existeIdentificador(factorDos)) {
+	if (existenIdentificadores(factorUno,factorDos) {
 		generarVariableTemporal();
 		printf("MULT %s,%s,%s\n", factorUno, factorDos, temp_text);
 		return 0;
 	} else {
+		semantic_error_count++;
 		return 1;
 	}
+}
+
+int dividir(char* dividendo, char* divisor){
+	if (existenIdentificadores(dividendo, divisor)) {
+		realizarOperacion("DIV", dividendo, divisor);
+		return 0;
+	} else {
+		semantic_error_count++;
+		return 1;
+	}
+}
+
+int restar(char* minuendo, char* sustraendo){
+	if (existenIdentificadores(minuendo, sustraendo)) {
+		realizarOperacion("SUBS",minuendo,sustraendo);	
+		return 0;
+	} else {
+		semantic_error_count++;
+		return 1;
+	}
+}
+
+int sumar(char* sumandoUno, char* sumandoDos){
+	if(existenIdentificadores(sumandoUno, sumandoDos)){
+		realizarOperacion("ADD", sumandoUno, sumandoDos);
+		return 0;
+	}else{
+		semantic_error_count++;
+		return 1
+	}
+}
+
+int asignar(char* identificador, char* valor){
+		printf("Store %s, %s", valor, identificador);
+		return 0;
 }

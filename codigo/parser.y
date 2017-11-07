@@ -1,7 +1,7 @@
 %{
 #include <stdio.h>
 #include "scanner.h"
-#include "semantic.c"
+#include "semantic.h"
 %}
 
 %defines "parser.h"
@@ -25,7 +25,7 @@
 
 %%
 
-programa : programa cuerpoPrograma fin { if (yynerrs > 0 || lexem_error_count > 0 || semantic_error_count > 0) YYABORT; }
+programa : {inicioPrograma()} programa cuerpoPrograma fin { finPrograma(); if (yynerrs > 0 || lexem_error_count > 0 || semantic_error_count > 0) YYABORT; }
          ;
 
 cuerpoPrograma : VARIABLES listaDeclaraciones CODIGO listaSentencias
@@ -43,7 +43,7 @@ listaSentencias : listaSentencias sentencia
                 | sentencia
                 ;
 
-sentencia : IDENTIFICADOR ASIGNACION expresion ';' { printf("asignación\n"); }
+sentencia : IDENTIFICADOR ASIGNACION expresion ';' { asignar($1, $3); }
           | LEER '(' listaIdentificadores ')'  ';' { leerIdentificador($3); }
           | ESCRIBIR '(' listaExpresiones ')'  ';' { escribirIdentificador($3); } 
           | error ';'
@@ -57,9 +57,9 @@ listaExpresiones : listaExpresiones ',' expresion
                  | expresion
                  ;
 
-expresion :	expresion '+' expresion { printf("suma\n"); }
-		  | expresion '-' expresion { printf("resta\n"); }
-		  | expresion '/' expresion { printf("división\n"); }
+expresion :	expresion '+' expresion { sumar($1, $3); }
+		  | expresion '-' expresion { restar($1, $3); }
+		  | expresion '/' expresion { dividir($1, $3); }
 		  | expresion '*' expresion { multiplicar($1, $3); }
 		  | '-' expresion           { invertir($2); $$ = temp_text; } %prec NEG
 		  | '(' expresion ')'       { printf("paréntesis\n"); }

@@ -1,7 +1,7 @@
 #include <string.h>
 
-char *diccionario[1000];
-int indice_diccionario = 0;
+static char *diccionario[1000];
+static int indice_diccionario = 0;
 
 void registrarIdentificador(char *identificador) {
 	diccionario[indice_diccionario] = identificador;
@@ -15,4 +15,8 @@ int existeIdentificador(char *identificador) {
 		}
 	}
 	return 0;
+}
+
+int existenIdentificadores(char *identificadorUno, char *identificadorDos){
+	return existeIdentificador(identificadorUno) && existeIdentificador(identificadorDos);
 }
