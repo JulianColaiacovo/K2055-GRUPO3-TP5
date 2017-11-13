@@ -1,7 +1,7 @@
 #include "symbol.h"
 
-extern char temp_text[10];
-extern int semantic_error_count;
+char *temp_text;
+int semantic_error_count;
 static int indice_variable_temporal = 0;
 
 void inicioPrograma() {
@@ -23,6 +23,12 @@ int declararIdentificador(char *identificador) {
 	}
 }
 
+void declararConstante(char *constante) {
+	if (!existeIdentificador(constante)) {
+		registrarIdentificador(constante);
+	}
+}
+
 int leerIdentificador(char *identificador) {
 	if (existeIdentificador(identificador)) {
 		printf("Read %s,Integer\n", identificador);
@@ -41,13 +47,14 @@ int escribirIdentificador(char *identificador) {
 
 void generarVariableTemporal() {
 	indice_variable_temporal++;
+	temp_text = (char *)malloc(sizeof(char *));
 	sprintf(temp_text, "Temp#%d", indice_variable_temporal);
 	declararIdentificador(temp_text);
 }
 
-void realizarOperacion(char* instruccion, char* variableUno, char* VariableDos){
+void realizarOperacion(char* instruccion, char* variableUno, char* variableDos){
 	generarVariableTemporal();
-	printf("%s %s,%s,%s\n", instruccion, variableUno, variableDos, temp_text[indice_variable_temporal]);
+	printf("%s %s,%s,%s\n", instruccion, variableUno, variableDos, temp_text);
 }
 
 int invertir(char *identificador) {
@@ -61,10 +68,8 @@ int invertir(char *identificador) {
 }
 
 int multiplicar(char *factorUno, char *factorDos) {
-	printf("generado%s,%s\n", factorUno, factorDos);
-	if (existenIdentificadores(factorUno,factorDos) {
-		generarVariableTemporal();
-		printf("MULT %s,%s,%s\n", factorUno, factorDos, temp_text);
+	if (existenIdentificadores(factorUno,factorDos)) {
+		realizarOperacion("MULT", factorUno, factorDos);
 		return 0;
 	} else {
 		semantic_error_count++;
@@ -98,11 +103,11 @@ int sumar(char* sumandoUno, char* sumandoDos){
 		return 0;
 	}else{
 		semantic_error_count++;
-		return 1
+		return 1;
 	}
 }
 
 int asignar(char* identificador, char* valor){
-		printf("Store %s, %s", valor, identificador);
+		printf("Store %s, %s\n", valor, identificador);
 		return 0;
 }

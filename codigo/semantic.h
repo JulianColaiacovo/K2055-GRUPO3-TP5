@@ -1,10 +1,16 @@
 #ifndef SEMANTIC_H_INCLUDED
 #define SEMANTIC_H_INCLUDED
 
+#include "semantic.c"
+
+extern char *temp_text;
+extern int semantic_error_count;
+
 void inicioPrograma();
 void finPrograma();
 
 int declararIdentificador(char *identificador);
+void declararConstante(char *constante);
 
 int leerIdentificador(char *identificador);
 int escribirIdentificador(char *identificador);
