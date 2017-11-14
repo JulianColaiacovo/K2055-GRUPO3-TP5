@@ -3,6 +3,5 @@
 
 void registrarIdentificador(char *identificador);
 int existeIdentificador(char *identificador);
-int existenIdentificadores(char *identificadorUno, char *identificadorDos);
 
 #endif

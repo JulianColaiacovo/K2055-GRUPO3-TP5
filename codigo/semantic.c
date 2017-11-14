@@ -60,62 +60,40 @@ void generarVariableTemporal() {
 	declararIdentificador(temp_text);
 }
 
+void validarIdentificadorDeclarado(char *identificador) {
+	char *error = (char *)malloc(sizeof(char *));
+	if (!existeIdentificador(identificador)) {
+		semantic_error_count++;
+		sprintf(error, "Error semántico: identificador %s NO declarado", identificador);
+		yyerror(error);
+	}
+}
+
 void realizarOperacion(char* instruccion, char* variableUno, char* variableDos){
 	generarVariableTemporal();
 	printf("%s %s,%s,%s\n", instruccion, variableUno, variableDos, temp_text);
 }
 
-int invertir(char *identificador) {
-	if (existeIdentificador(identificador)) {
-		realizarOperacion("INV", identificador, "");
-		return 0;
-	} else {
-		semantic_error_count++;
-		return 1;
-	}
+void invertir(char *identificador) {
+	realizarOperacion("INV", identificador, "");
 }
 
-int multiplicar(char *factorUno, char *factorDos) {
-	if (existenIdentificadores(factorUno,factorDos)) {
-		realizarOperacion("MULT", factorUno, factorDos);
-		return 0;
-	} else {
-		semantic_error_count++;
-		return 1;
-	}
+void multiplicar(char *factorUno, char *factorDos) {
+	realizarOperacion("MULT", factorUno, factorDos);
 }
 
-int dividir(char* dividendo, char* divisor){
-	if (existenIdentificadores(dividendo, divisor)) {
-		realizarOperacion("DIV", dividendo, divisor);
-		return 0;
-	} else {
-		semantic_error_count++;
-		return 1;
-	}
+void dividir(char* dividendo, char* divisor){
+	realizarOperacion("DIV", dividendo, divisor);
 }
 
-int restar(char* minuendo, char* sustraendo){
-	if (existenIdentificadores(minuendo, sustraendo)) {
-		realizarOperacion("SUBS",minuendo,sustraendo);	
-		return 0;
-	} else {
-		semantic_error_count++;
-		return 1;
-	}
+void restar(char* minuendo, char* sustraendo){
+	realizarOperacion("SUBS",minuendo,sustraendo);
 }
 
-int sumar(char* sumandoUno, char* sumandoDos){
-	if(existenIdentificadores(sumandoUno, sumandoDos)){
-		realizarOperacion("ADD", sumandoUno, sumandoDos);
-		return 0;
-	}else{
-		semantic_error_count++;
-		return 1;
-	}
+void sumar(char* sumandoUno, char* sumandoDos){
+	realizarOperacion("ADD", sumandoUno, sumandoDos);
 }
 
-int asignar(char* identificador, char* valor){
-		printf("Store %s, %s\n", valor, identificador);
-		return 0;
+void asignar(char* identificador, char* valor){
+	printf("Store %s, %s\n", valor, identificador);
 }

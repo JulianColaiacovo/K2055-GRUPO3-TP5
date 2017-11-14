@@ -16,7 +16,3 @@ int existeIdentificador(char *identificador) {
 	}
 	return 0;
 }
-
-int existenIdentificadores(char *identificadorUno, char *identificadorDos){
-	return existeIdentificador(identificadorUno) && existeIdentificador(identificadorDos);
-}

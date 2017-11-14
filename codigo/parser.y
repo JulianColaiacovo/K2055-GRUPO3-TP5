@@ -63,7 +63,7 @@ expresion :	expresion '+' expresion { sumar($1, $3); $$ = temp_text; }
 		      | expresion '*' expresion { multiplicar($1, $3); $$ = temp_text; }
 		      | '-' expresion           { invertir($2); $$ = temp_text; } %prec NEG
 		      | '(' expresion ')'       { $$ = $2; }
-		      | IDENTIFICADOR
+		      | IDENTIFICADOR           { validarIdentificadorDeclarado($1); }
 		      | CONSTANTE               { declararConstante($1); }
 		      ;
 

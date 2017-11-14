@@ -15,14 +15,13 @@ int escribirIdentificador(char *identificador);
 
 void generarVariableTemporal();
 
+void validarIdentificadorDeclarado(char *identificador);
 
-void realizarOperacion(char* instruccion, char* variableUno, char* VariableDos);
-
-int invertir(char *identificador);
-int multiplicar(char *factorUno, char *factorDos);
-int dividir(char* dividendo, char* divisor);
-int restar(char* minuendo, char* sustraendo);
-int sumar(char* sumandoUno, char* sumandoDos);
-int asignar(char* identificador, char* valor);
+void invertir(char *identificador);
+void multiplicar(char *factorUno, char *factorDos);
+void dividir(char* dividendo, char* divisor);
+void restar(char* minuendo, char* sustraendo);
+void sumar(char* sumandoUno, char* sumandoDos);
+void asignar(char* identificador, char* valor);
 
 #endif
