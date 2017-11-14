@@ -1,8 +1,6 @@
 #ifndef SEMANTIC_H_INCLUDED
 #define SEMANTIC_H_INCLUDED
 
-#include "semantic.c"
-
 extern char *temp_text;
 extern int semantic_error_count;
 

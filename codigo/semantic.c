@@ -1,4 +1,8 @@
 #include "symbol.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "semantic.h"
+#include "parser.h"
 
 char *temp_text;
 int semantic_error_count;
@@ -13,8 +17,12 @@ void finPrograma() {
 }
 
 int declararIdentificador(char *identificador) {
+	char * error = (char *)malloc(sizeof(char *));
+
 	if (existeIdentificador(identificador)) {
 		semantic_error_count++;
+		sprintf(error, "Error semántico: identificador %s ya declarado", identificador);
+		yyerror(error);
 		return 1;
 	} else {
 		registrarIdentificador(identificador);

@@ -42,7 +42,7 @@ fin {return FIN;}
                                strcat(errorMsg, yytext);
                                yyerror(errorMsg); 
                                lexem_error_count++;
-                               free(errorMsg);
+                               //free(errorMsg);
                             }
 {identificador}{caracter_invalido}({caracter_invalido}|{identificador}|{constante})* {
                                char *errorMsg = malloc(sizeof(yytext) + 100); 
@@ -50,7 +50,7 @@ fin {return FIN;}
                                strcat(errorMsg, yytext);
                                yyerror(errorMsg); 
                                lexem_error_count++;
-                               free(errorMsg);
+                               //free(errorMsg);
                             }
 {caracter_invalido}+ {	
                         char *errorMsg= malloc(sizeof(yytext) + 100);
@@ -58,6 +58,6 @@ fin {return FIN;}
                         strcat(errorMsg, yytext);
                         yyerror(errorMsg); 
                         lexem_error_count++;
-                        free(errorMsg);
+                        //free(errorMsg);
                      }
 %%
