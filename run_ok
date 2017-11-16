@@ -1,1 +1,3 @@
-./target/main < entradas/entradaok.txt
+./build
+(./target/main < entradas/entradaok.txt) > target/salida_ok.txt
+diff target/salida_ok.txt salidas/salidaok.txt

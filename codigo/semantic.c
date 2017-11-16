@@ -95,5 +95,5 @@ void sumar(char* sumandoUno, char* sumandoDos){
 }
 
 void asignar(char* identificador, char* valor){
-	printf("Store %s, %s\n", valor, identificador);
+	printf("Store %s,%s\n", valor, identificador);
 }

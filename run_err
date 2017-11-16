@@ -1,1 +1,3 @@
-./target/main < entradas/entradaerr.txt
+./build
+(./target/main < entradas/entradaerr.txt) >> target/salida_err.txt
+diff target/salida_err.txt salidas/salidaerrbis.txt
