@@ -7,14 +7,14 @@ extern int semantic_error_count;
 void inicioPrograma();
 void finPrograma();
 
-int declararIdentificador(char *identificador);
+void declararIdentificador(char *identificador);
 
-int leerIdentificador(char *identificador);
-int escribirIdentificador(char *identificador);
+void leerIdentificador(char *identificador);
+void escribirIdentificador(char *identificador);
 
 void generarVariableTemporal();
 
-void validarIdentificadorDeclarado(char *identificador);
+int validarIdentificadorDeclarado(char *identificador);
 
 void invertir(char *identificador);
 void multiplicar(char *factorUno, char *factorDos);

@@ -15,4 +15,4 @@ DIV total,2,Temp#1
 Write Temp#1,Integer
 Stop ,
 Errores de compilación
-Errors sintácticos: 1 - Errores léxicos: 3 - Errores Semánticos: 2
+Errores sintácticos: 1 - Errores léxicos: 3 - Errores semánticos: 2

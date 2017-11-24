@@ -16,35 +16,25 @@ void finPrograma() {
 	printf("Stop ,\n");
 }
 
-int declararIdentificador(char *identificador) {
+void declararIdentificador(char *identificador) {
 	char * error = (char *)malloc(sizeof(char *));
 
 	if (existeIdentificador(identificador)) {
 		semantic_error_count++;
 		sprintf(error, "Error semántico: identificador %s ya declarado", identificador);
 		yyerror(error);
-		return 1;
 	} else {
 		registrarIdentificador(identificador);
 		printf("Declare %s,Integer\n", identificador);
-		return 0;
 	}
 }
 
-int leerIdentificador(char *identificador) {
-	if (existeIdentificador(identificador)) {
-		printf("Read %s,Integer\n", identificador);
-	} else {
-		return 0;
-	}
+void leerIdentificador(char *identificador) {
+	printf("Read %s,Integer\n", identificador);
 }
 
-int escribirIdentificador(char *identificador) {
-	if (existeIdentificador(identificador)) {
-		printf("Write %s,Integer\n", identificador);
-	} else {
-		return 0;
-	}
+void escribirIdentificador(char *identificador) {
+	printf("Write %s,Integer\n", identificador);
 }
 
 void generarVariableTemporal() {
@@ -54,13 +44,15 @@ void generarVariableTemporal() {
 	declararIdentificador(temp_text);
 }
 
-void validarIdentificadorDeclarado(char *identificador) {
+int validarIdentificadorDeclarado(char *identificador) {
 	char *error = (char *)malloc(sizeof(char *));
 	if (!existeIdentificador(identificador)) {
 		semantic_error_count++;
 		sprintf(error, "Error semántico: identificador %s NO declarado", identificador);
 		yyerror(error);
+		return 1;
 	}
+	return 0;
 }
 
 void realizarOperacion(char* instruccion, char* variableUno, char* variableDos){
