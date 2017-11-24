@@ -31,12 +31,6 @@ int declararIdentificador(char *identificador) {
 	}
 }
 
-void declararConstante(char *constante) {
-	if (!existeIdentificador(constante)) {
-		registrarIdentificador(constante);
-	}
-}
-
 int leerIdentificador(char *identificador) {
 	if (existeIdentificador(identificador)) {
 		printf("Read %s,Integer\n", identificador);

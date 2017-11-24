@@ -4,7 +4,7 @@ Declare var1,Integer
 Declare var2,Integer
 línea #6: Error semántico: identificador var2 ya declarado
 línea #7: Error léxico: cadena desconocida: ##@
-línea #7: syntax error, unexpected ';', expecting ID
+línea #7: syntax error, unexpected ';', expecting IDENTIFICADOR
 Read var1,Integer
 Read var2,Integer
 línea #10: Error léxico: constante con sufijo inválido: 32z

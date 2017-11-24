@@ -8,7 +8,6 @@ void inicioPrograma();
 void finPrograma();
 
 int declararIdentificador(char *identificador);
-void declararConstante(char *constante);
 
 int leerIdentificador(char *identificador);
 int escribirIdentificador(char *identificador);
