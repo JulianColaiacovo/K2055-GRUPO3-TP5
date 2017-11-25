@@ -4,7 +4,7 @@
 #include "semantic.h"
 #include "parser.h"
 
-char *temp_text;
+char buffer_error[100];
 int semantic_error_count;
 static int indice_variable_temporal = 0;
 
@@ -17,12 +17,10 @@ void finPrograma() {
 }
 
 void declararIdentificador(char *identificador) {
-	char * error = (char *)malloc(sizeof(char *));
-
 	if (existeIdentificador(identificador)) {
 		semantic_error_count++;
-		sprintf(error, "Error semántico: identificador %s ya declarado", identificador);
-		yyerror(error);
+		sprintf(buffer_error, "Error semántico: identificador %s ya declarado", identificador);
+		yyerror(buffer_error);
 	} else {
 		registrarIdentificador(identificador);
 		printf("Declare %s,Integer\n", identificador);
@@ -37,47 +35,48 @@ void escribirIdentificador(char *identificador) {
 	printf("Write %s,Integer\n", identificador);
 }
 
-void generarVariableTemporal() {
+char * generarVariableTemporal() {
 	indice_variable_temporal++;
-	temp_text = (char *)malloc(sizeof(char *));
-	sprintf(temp_text, "Temp#%d", indice_variable_temporal);
-	declararIdentificador(temp_text);
+	char * temp = malloc(sizeof(char) * 10);
+	sprintf(temp, "Temp#%d", indice_variable_temporal);
+	declararIdentificador(temp);
+	return temp;
 }
 
 int validarIdentificadorDeclarado(char *identificador) {
-	char *error = (char *)malloc(sizeof(char *));
 	if (!existeIdentificador(identificador)) {
 		semantic_error_count++;
-		sprintf(error, "Error semántico: identificador %s NO declarado", identificador);
-		yyerror(error);
+		sprintf(buffer_error, "Error semántico: identificador %s NO declarado", identificador);
+		yyerror(buffer_error);
 		return 1;
 	}
 	return 0;
 }
 
-void realizarOperacion(char* instruccion, char* variableUno, char* variableDos){
-	generarVariableTemporal();
-	printf("%s %s,%s,%s\n", instruccion, variableUno, variableDos, temp_text);
+char * realizarOperacion(char* instruccion, char* variableUno, char* variableDos){
+	char * temp = generarVariableTemporal();
+	printf("%s %s,%s,%s\n", instruccion, variableUno, variableDos, temp);
+	return temp;
 }
 
-void invertir(char *identificador) {
-	realizarOperacion("INV", identificador, "");
+char * invertir(char *identificador) {
+	return realizarOperacion("INV", identificador, "");
 }
 
-void multiplicar(char *factorUno, char *factorDos) {
-	realizarOperacion("MULT", factorUno, factorDos);
+char * multiplicar(char *factorUno, char *factorDos) {
+	return realizarOperacion("MULT", factorUno, factorDos);
 }
 
-void dividir(char* dividendo, char* divisor){
-	realizarOperacion("DIV", dividendo, divisor);
+char * dividir(char* dividendo, char* divisor){
+	return realizarOperacion("DIV", dividendo, divisor);
 }
 
-void restar(char* minuendo, char* sustraendo){
-	realizarOperacion("SUBS",minuendo,sustraendo);
+char * restar(char* minuendo, char* sustraendo){
+	return realizarOperacion("SUBS",minuendo,sustraendo);
 }
 
-void sumar(char* sumandoUno, char* sumandoDos){
-	realizarOperacion("ADD", sumandoUno, sumandoDos);
+char * sumar(char* sumandoUno, char* sumandoDos){
+	return realizarOperacion("ADD", sumandoUno, sumandoDos);
 }
 
 void asignar(char* identificador, char* valor){

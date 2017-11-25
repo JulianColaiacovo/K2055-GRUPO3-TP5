@@ -43,29 +43,31 @@ listaSentencias : listaSentencias sentencia
                 | sentencia
                 ;
 
-sentencia : IDENTIFICADOR ASIGNACION expresion ';' { asignar($1, $3); }
+sentencia : identificador ASIGNACION expresion ';' { asignar($1, $3); }
           | LEER '(' listaIdentificadores ')'  ';'
-          | ESCRIBIR '(' listaExpresiones ')'  ';' { escribirIdentificador($3); } 
+          | ESCRIBIR '(' listaExpresiones ')'  ';'  
           | error ';'
           ;
 
-listaIdentificadores : listaIdentificadores ',' IDENTIFICADOR { leerIdentificador($3); }
-                     | IDENTIFICADOR { leerIdentificador($1); }
+listaIdentificadores : listaIdentificadores ',' identificador { leerIdentificador($3); }
+                     | identificador { leerIdentificador($1); }
                      ;
 
-listaExpresiones : listaExpresiones ',' expresion
-                 | expresion
+listaExpresiones : listaExpresiones ',' expresion { escribirIdentificador($3); }
+                 | expresion { escribirIdentificador($1); }
                  ;
 
-expresion :	expresion '+' expresion { sumar($1, $3); $$ = temp_text; }
-		      | expresion '-' expresion { restar($1, $3); $$ = temp_text; }
-		      | expresion '/' expresion { dividir($1, $3); $$ = temp_text; }
-		      | expresion '*' expresion { multiplicar($1, $3); $$ = temp_text; }
-		      | '-' expresion           { invertir($2); $$ = temp_text; } %prec NEG
+expresion :	expresion '+' expresion { $$ = sumar($1, $3); }
+		      | expresion '-' expresion { $$ = restar($1, $3); }
+		      | expresion '/' expresion { $$ = dividir($1, $3); }
+		      | expresion '*' expresion { $$ = multiplicar($1, $3); }
+		      | '-' expresion           { $$ = invertir($2); } %prec NEG
 		      | '(' expresion ')'       { $$ = $2; }
-		      | IDENTIFICADOR           { if (validarIdentificadorDeclarado($1)) YYERROR; }
+		      | identificador           
 		      | CONSTANTE              
 		      ;
+
+identificador : IDENTIFICADOR { $$ = $1; if (validarIdentificadorDeclarado($1)) YYERROR; } 
 
 %%
 int lexem_error_count = 0;

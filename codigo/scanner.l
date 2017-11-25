@@ -37,27 +37,27 @@ fin {return FIN;}
 {constante}     { yylval = strdup(yytext); return CONSTANTE; }
 :=              { return ASIGNACION; }
 {constante}{identificador}+ {  
-                               char* errorMsg = malloc(sizeof(yytext) + 100); 
+                               char* errorMsg = malloc(sizeof(yytext) + sizeof(char) * 100); 
                                strcpy(errorMsg,"Error léxico: constante con sufijo inválido: "); 
                                strcat(errorMsg, yytext);
                                yyerror(errorMsg); 
                                lexem_error_count++;
-                               //free(errorMsg);
+                               free(errorMsg);
                             }
 {identificador}{caracter_invalido}({caracter_invalido}|{identificador}|{constante})* {
-                               char *errorMsg = malloc(sizeof(yytext) + 100); 
+                               char *errorMsg = malloc(sizeof(yytext) + sizeof(char) * 100); 
                                strcpy(errorMsg,"Error léxico: identificador inválido: "); 	
                                strcat(errorMsg, yytext);
                                yyerror(errorMsg); 
                                lexem_error_count++;
-                               //free(errorMsg);
+                               free(errorMsg);
                             }
 {caracter_invalido}+ {	
-                        char *errorMsg= malloc(sizeof(yytext) + 100);
+                        char *errorMsg= malloc(sizeof(yytext) + sizeof(char) * 100);
                         strcpy(errorMsg,"Error léxico: cadena desconocida: "); 
                         strcat(errorMsg, yytext);
                         yyerror(errorMsg); 
                         lexem_error_count++;
-                        //free(errorMsg);
+                       	free(errorMsg);
                      }
 %%
